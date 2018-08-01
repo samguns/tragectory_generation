@@ -3,6 +3,7 @@
 #include <math.h>
 #include <vector>
 #include "hybrid_breadth_first.h"
+#include "polynomial_solver.h"
 
 using namespace std;
 
@@ -38,8 +39,7 @@ vector< vector<int> > GRID = MAZE;
 vector<double> START = {0.0,0.0,0.0};
 vector<int> GOAL = {(int)GRID.size()-1, (int)GRID[0].size()-1};
 
-int main() {
-
+static void verify_hbf() {
   cout << "Finding path through grid:" << endl;
 
   // Create an Empty Maze and try testing the number of expansions with it
@@ -64,13 +64,17 @@ int main() {
   for(int i = show_path.size()-1; i >= 0; i--)
   {
 
-      HBF::maze_s step = show_path[i];
-      cout << "##### step " << step.g << " #####" << endl;
-      cout << "x " << step.x << endl;
-      cout << "y " << step.y << endl;
-      cout << "theta " << step.theta << endl;
+    HBF::maze_s step = show_path[i];
+    cout << "##### step " << step.g << " #####" << endl;
+    cout << "x " << step.x << endl;
+    cout << "y " << step.y << endl;
+    cout << "theta " << step.theta << endl;
 
   }
+}
 
+int main() {
+  // verify_hbf();
+  verify_JMT();
   return 0;
 }
