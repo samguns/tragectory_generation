@@ -2,17 +2,18 @@ import numpy as np
 import random
 from cost_functions import *
 from constants import *
+from helpers import show_potential_trajectory
 
 # TODO - tweak weights to existing cost functions
 WEIGHTED_COST_FUNCTIONS = [
     (time_diff_cost,    1),
     (s_diff_cost,       1),
-    (d_diff_cost,       1),
+    (d_diff_cost,       1000000),
     (efficiency_cost,   1),
-    (max_jerk_cost,     1),
+    (max_jerk_cost,     10000),
     (total_jerk_cost,   1),
-    (collision_cost,    1),
-    (buffer_cost,       1),
+    (collision_cost,    10),
+    (buffer_cost,       10),
     (max_accel_cost,    1),
     (total_accel_cost,  1),
 ]
@@ -70,6 +71,8 @@ def PTG(start_s, start_d, target_vehicle, delta, T, predictions):
         s_coefficients = JMT(start_s, s_goal, t)
         d_coefficients = JMT(start_d, d_goal, t)
         trajectories.append(tuple([s_coefficients, d_coefficients, t]))
+        if t == 3:
+            show_potential_trajectory(s_coefficients, d_coefficients, t)
     
     best = min(trajectories, key=lambda tr: calculate_cost(tr, target_vehicle, delta, T, predictions, WEIGHTED_COST_FUNCTIONS))
     calculate_cost(best, target_vehicle, delta, T, predictions, WEIGHTED_COST_FUNCTIONS, verbose=True)

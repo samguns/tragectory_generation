@@ -100,6 +100,19 @@ def show_trajectory(s_coeffs, d_coeffs, T, vehicle=None):
         plt.scatter(X2, Y2,color="red")
     plt.show()
 
+def show_potential_trajectory(s_coeffs, d_coeffs, T):
+    s = to_equation(s_coeffs)
+    d = to_equation(d_coeffs)
+    X = []
+    Y = []
+    t = 0
+    while t <= T+0.01:
+        X.append(s(t))
+        Y.append(d(t))
+
+        t += 0.25
+    plt.scatter(X,Y,color="green")
+
 def get_f_and_N_derivatives(coeffs, N=3):
     functions = [to_equation(coeffs)]
     for i in range(N):
